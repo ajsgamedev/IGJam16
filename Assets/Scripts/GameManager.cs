@@ -7,26 +7,60 @@ public class GameManager : MonoBehaviour {
     public List<Transform> tilesInUse;
     public List<Transform> tilePool;
 
+    public List<Transform> obstaclesInUse;
+    public List<Transform> obstaclePool;
+
     float movedDistance = 0;
     Vector3 lastPos;
+
+    public static GameManager instance;
+
+    //ObstacleSpawnStuff
+    public int nextSpawnInterval;
+    int currentSpawnInterval;
+
 	// Use this for initialization
 	void Start () {
+        currentSpawnInterval = nextSpawnInterval;
         SetupTiles();
+        instance = this;
 	}
 
     void SetupTiles()
     {
         float horzExtent = Camera.main.orthographicSize * Screen.width / Screen.height;
         horzExtent *= 2;
-        int tilesNeeded = (int)(horzExtent / tileWidth) + 2;
-        float startPoint = horzExtent * -0.5f; 
+        int tilesNeeded = (int)(horzExtent / tileWidth) + 3;
+        float startPoint = horzExtent * -0.5f;
+        startPoint -= tileWidth;
         for(int i = 0; i < tilesNeeded;i++)
         {
-            int randomNumber = Random.Range(0, tilePool.Count);
             lastPos = new Vector3(startPoint + (tileWidth * i), 0, 0);
-            tilePool[randomNumber].localPosition = lastPos;
-            tilesInUse.Add(tilePool[randomNumber]);
-            tilePool.RemoveAt(randomNumber);
+            CreateTile();
+        }
+    }
+
+    void CreateTile()
+    {
+        int randomNumber = Random.Range(0, tilePool.Count);
+        tilePool[randomNumber].localPosition = lastPos;
+        tilesInUse.Add(tilePool[randomNumber]);
+        tilePool.RemoveAt(randomNumber);
+        currentSpawnInterval--;
+        if(currentSpawnInterval <= 0)
+        {
+            int randomNumber2 = Random.Range(0, obstaclePool.Count);
+            obstaclePool[randomNumber2].localPosition = lastPos;
+            obstaclesInUse.Add(obstaclePool[randomNumber2]);
+            obstaclePool.RemoveAt(randomNumber2);
+
+            //Just to ensure the removing happens late enough
+            if (obstaclesInUse.Count > 3)
+            {
+                obstaclePool.Add(obstaclesInUse[0]);
+                obstaclesInUse.RemoveAt(0);
+            }
+            currentSpawnInterval = nextSpawnInterval;
         }
     }
 
@@ -40,10 +74,12 @@ public class GameManager : MonoBehaviour {
             tilePool.Add(tilesInUse[0]);
             tilesInUse.RemoveAt(0);
 
-            int randomNumber = Random.Range(0, tilePool.Count);
-            tilePool[randomNumber].localPosition = lastPos;
-            tilesInUse.Add(tilePool[randomNumber]);
-            tilePool.RemoveAt(randomNumber);
+            CreateTile();
         }
 	}
+
+    public void Lose()
+    {
+
+    }
 }

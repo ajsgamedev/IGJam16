@@ -3,9 +3,15 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
+    public float maskTime;
     public float speed;
     public static float runningSpeed;
+
     public MaskType currentMask;
+    bool maskActivated;
+
+
+
     SpriteRenderer renderer;
 	// Use this for initialization
 	void Start () {
@@ -28,15 +34,29 @@ public class Player : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            ActivateMask();
+            StartCoroutine("ActivateMask");
         }
         //Movement
         transform.Translate(runningSpeed * Time.deltaTime, 0, 0);
 	}
-
-    void ActivateMask()
+    
+    IEnumerable ActivateMask()
     {
-        
+        maskActivated = true;
+        switch (currentMask)
+        {
+            case MaskType.Crow:
+
+                break;
+            case MaskType.Bull:
+
+                break;
+            case MaskType.Mice:
+
+                break;
+        }
+        yield return new WaitForSeconds(maskTime);
+        maskActivated = false;
     }
 
     void SwipeMask(bool direction)
@@ -68,6 +88,19 @@ public class Player : MonoBehaviour {
             case MaskType.Mice:
                 renderer.material.color = Color.grey;
                 break;
+        }
+    }
+
+    public void OnTriggerStay(Collider other)
+    {
+        
+        if(other.name == "Enemy1" || other.name == "Enemy3")
+        {
+            GameManager.instance.Lose();
+        }
+        if (other.name == "Enemy2" && !(maskActivated && currentMask == MaskType.Bull))
+        {
+            GameManager.instance.Lose();
         }
     }
 
