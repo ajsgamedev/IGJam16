@@ -3,13 +3,15 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-    public float runningSpeed;
+    public float speed;
+    public static float runningSpeed;
     public MaskType currentMask;
     SpriteRenderer renderer;
 	// Use this for initialization
 	void Start () {
         currentMask = MaskType.Crow;
         renderer = GetComponent<SpriteRenderer>();
+        runningSpeed = speed;
 	}
 	
 	// Update is called once per frame
