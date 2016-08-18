@@ -7,12 +7,15 @@ public class ScoreManager : MonoBehaviour {
 
 	public int score;
 
-	Text text;
+	public Text text;
+
+    public static ScoreManager instance;
 
 	// Use this for initialization
 	void Awake () 
 	{
-		text = GetComponent<Text> ();
+        instance = this;
+		//text = GetComponent<Text> ();
 		score = 0;
 	}
 	

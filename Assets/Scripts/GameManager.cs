@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour {
     public int nextBigBirdSpawnInterval;
     int currentBigBirdSpawnInterval;
 
+    float progress;
+
 	// Use this for initialization
 	void Start () {
         currentObstacleSpawnInterval = nextObstacleSpawnInterval;
@@ -63,12 +65,15 @@ public class GameManager : MonoBehaviour {
         player = FindObjectOfType<Player>();
         movedMiddleDistance = screenInMeters;
         movedBackDistance = screenInMeters;
+
+        progress = PlayerPrefs.GetFloat("progress");
 	}
 
     void SetupTiles()
     {
         screenInMeters = Camera.main.orthographicSize * Screen.width / Screen.height;
         screenInMeters *= 2;
+        Debug.Log(screenInMeters);
         int tilesNeeded = (int)(screenInMeters / tileWidth) + 3;
         float startPoint = screenInMeters * -0.5f;
         startPoint -= tileWidth;
@@ -211,6 +216,8 @@ public class GameManager : MonoBehaviour {
 		if (hearts <= 0)
 		{
 			Debug.Log ("GAMEOVER!!!");
+            progress += ScoreManager.instance.score / 10;
+            PlayerPrefs.SetFloat("progress", progress);
 		}
 
 		for(int i=0;i<UIHearts.Length;i++) {
