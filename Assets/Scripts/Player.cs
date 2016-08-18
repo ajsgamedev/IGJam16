@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		currentMask = MaskType.Crow;
+		//currentMask = MaskType.Crow;
 		renderer = GetComponent<SpriteRenderer> ();
 		runningSpeed = speed;
 	}
@@ -44,25 +44,6 @@ public class Player : MonoBehaviour
 		transform.Translate (runningSpeed * Time.deltaTime, 0, 0);
 	}
 
-	IEnumerable ActivateMask ()
-	{
-		maskActivated = true;
-		switch (currentMask)
-		{
-		case MaskType.Crow:
-
-			break;
-		case MaskType.Bull:
-
-			break;
-		case MaskType.Mice:
-
-			break;
-		}
-		yield return new WaitForSeconds (maskTime);
-		maskActivated = false;
-	}
-
 	void SwipeMask (bool direction)
 	{
 		if (direction)
@@ -83,28 +64,15 @@ public class Player : MonoBehaviour
 		}
 		switch (currentMask)
 		{
-		case MaskType.Crow:
+		case MaskType.BlueBird:
 			renderer.material.color = Color.blue;
 			break;
-		case MaskType.Bull:
+		case MaskType.GreenBird:
 			renderer.material.color = Color.green;
 			break;
-		case MaskType.Mice:
-			renderer.material.color = Color.grey;
+		case MaskType.YellowBird:
+			renderer.material.color = Color.yellow;
 			break;
-		}
-	}
-
-	public void OnTriggerStay (Collider other)
-	{
-        
-		if (other.name == "Enemy1" || other.name == "Enemy3")
-		{
-			GameManager.instance.Lose ();
-		}
-		if (other.name == "Enemy2" && !(maskActivated && currentMask == MaskType.Bull))
-		{
-			GameManager.instance.Lose ();
 		}
 	}
 
@@ -128,7 +96,7 @@ public class Player : MonoBehaviour
 
 public enum MaskType
 {
-	Crow,
-	Bull,
-	Mice
+	BlueBird,
+	GreenBird,
+	YellowBird
 }
