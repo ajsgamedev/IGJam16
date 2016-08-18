@@ -3,7 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
-    public float tileWidth;
+
+	public int hearts = 3;
+	public GameObject[] UIHearts;
+
+	public float tileWidth;
     public List<Transform> tilesInUse;
     public List<Transform> tilePool;
 
@@ -82,4 +86,21 @@ public class GameManager : MonoBehaviour {
     {
 
     }
+
+	//refresh UI for health
+	public void refreshUI()
+	{
+		if (hearts <= 0)
+		{
+			Debug.Log ("GAMEOVER!!!");
+		}
+
+		for(int i=0;i<UIHearts.Length;i++) {
+			if (i<(hearts)) { // show one less than the number of lives since you only typically show lifes after the current life in UI
+				UIHearts[i].SetActive(true);
+			} else {
+				UIHearts[i].SetActive(false);
+			}
+		}
+	}
 }
