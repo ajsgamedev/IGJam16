@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI; 
+
 
 public class Player : MonoBehaviour
 {
@@ -7,41 +9,39 @@ public class Player : MonoBehaviour
 	public float maskTime;
 	public float speed;
 	public static float runningSpeed;
+	public float jumpForce = 5.0f;
 
 	public MaskType currentMask;
 	bool maskActivated;
 
+	public LayerMask whatisGround;
+	public Transform groundCheck;
 
+	bool isGrounded = true;
 
 	SpriteRenderer renderer;
+	Rigidbody2D rigidb;
+
 	// Use this for initialization
 	void Start ()
 	{
 		currentMask = MaskType.Crow;
 		renderer = GetComponent<SpriteRenderer> ();
+
 		runningSpeed = speed;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		//Input
-		if (Input.GetKeyDown (KeyCode.A))
-		{
-			SwipeMask (false);
-		}
-		else
-		if (Input.GetKeyDown (KeyCode.D))
-		{
-			SwipeMask (true);
-		}
 
-		if (Input.GetKeyDown (KeyCode.Space))
-		{
-			StartCoroutine ("ActivateMask");
-		}
 		//Movement
 		transform.Translate (runningSpeed * Time.deltaTime, 0, 0);
+
+		if (isGrounded == false)
+		{
+			isGrounded = true;
+		}
 	}
 
 	IEnumerable ActivateMask ()
@@ -108,20 +108,16 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	public void Jump ()
-	{				
-		float jumpVal;
-
-		jumpVal = this.gameObject.transform.position.y + 2.0f;
-		//this.gameObject.transform.position.y = jumpVal;
-		transform.Translate (transform.position.x, jumpVal*Time.deltaTime,0 );
+	public void Jump()
+	{
+		//rigidb.velocity = new Vector2 (0, jumpForce);
 	}
 
-	public void Slide()
+	public void Slide ()
 	{
 
 	}
-    
+
 }
 
 
