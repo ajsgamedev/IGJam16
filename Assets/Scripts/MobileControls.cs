@@ -10,6 +10,16 @@ public class MobileControls : MonoBehaviour
 	private Vector2 fingerStart;
 	private Vector2 fingerEnd;
 
+	Rigidbody2D _rigidbody;
+	Transform _transform; 
+	Animator _animator;
+	float _vy;
+
+	bool isJumping = false;
+	bool isSliding = false;
+	bool isGrounded = false;
+
+
 	public enum Movement
 	{
 		Up,
@@ -17,6 +27,14 @@ public class MobileControls : MonoBehaviour
 	};
 
 	public List<Movement> movements = new List<Movement> ();
+
+
+	void Awake()
+	{
+		_transform = GetComponent<Transform> ();
+		_rigidbody = GetComponent<Rigidbody2D> ();
+		_animator = GetComponent<Animator> ();
+	}
 
 	void Update ()
 	{
@@ -46,14 +64,29 @@ public class MobileControls : MonoBehaviour
 				if ((fingerEnd.y - fingerStart.y) > 0)
 				{
 					//Up Swipe
+					isJumping = true;
+					if (isJumping == true)
+					{
+						_animator.Play ("ScarecrowJump");
+						StartCoroutine( DoJump ());
+						//isJumping = false;
+					}
+					isJumping = false;
 					movements.Add (Movement.Up);
-					swipe.text = "Swipe: Up!!";
+
 				}
 				else
 				{
-					//Down Swipe
+					//Down
+					isSliding = true;
+					if(isSliding == true)
+					{
+						_animator.Play ("ScarecrowSlide");
+						StartCoroutine (DoSlide ());
+						
+					}
+					isSliding = false;
 					movements.Add (Movement.Down);
-					swipe.text = "Swipe: Down!!";
 				}
 
 				//After the checks are performed, set the fingerStart & fingerEnd to be the same
@@ -65,6 +98,8 @@ public class MobileControls : MonoBehaviour
 			}
 		}
 
+
+
 		//GetMouseButtonUp(0) instead of TouchPhase.Ended
 		if (Input.GetMouseButtonUp (0))
 		{
@@ -73,5 +108,26 @@ public class MobileControls : MonoBehaviour
 			movements.Clear ();
 		}
 			
+
 	}
+
+	IEnumerator DoJump()
+	{
+		while (true)
+		{
+			_animator.Play ("ScarecrowJump");
+			yield return new WaitForSeconds (3.0f);
+		}
+	}
+
+	IEnumerator DoSlide()
+	{
+		while (true)
+		{
+			_animator.Play ("ScarecrowSlide");
+			yield return new WaitForSeconds (3.0f);
+		}
+	}
+
+
 }
