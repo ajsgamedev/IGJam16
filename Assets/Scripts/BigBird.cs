@@ -61,5 +61,7 @@ public class BigBird : MonoBehaviour {
         //PlayOtherFancyStuff
         GameManager.instance.hearts--;
         GameManager.instance.refreshUI();
+
+
     }
 }

@@ -61,8 +61,8 @@ public class GameManager : MonoBehaviour {
         SetupTiles();
         instance = this;
         player = FindObjectOfType<Player>();
-        //movedMiddleDistance = -screenInMeters;
-        //movedBackDistance = -screenInMeters;
+        movedMiddleDistance = screenInMeters;
+        movedBackDistance = screenInMeters;
 	}
 
     void SetupTiles()
@@ -146,8 +146,8 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         movedDistance += Player.runningSpeed * Time.deltaTime;
-        movedMiddleDistance += middlegroundScrollingSpeed * Time.deltaTime;
-        movedBackDistance += backgroundScrollingSpeed * Time.deltaTime;
+        movedMiddleDistance +=  (Player.runningSpeed - middlegroundScrollingSpeed) * Time.deltaTime;
+        movedBackDistance += (Player.runningSpeed - backgroundScrollingSpeed) * Time.deltaTime;
 
         if(movedDistance >= tileWidth)
         {
@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour {
             backGroundInUse.Add(backGroundPool[RandomBack]);
             backGroundPool.RemoveAt(RandomBack);
 
-            if(backGroundInUse.Count > 1)
+            if(backGroundInUse.Count > 2)
             {
                 backGroundPool.Add(backGroundInUse[0]);
                 backGroundInUse.RemoveAt(0);
