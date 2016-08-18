@@ -12,6 +12,11 @@ public class GameManager : MonoBehaviour {
 	public float tileWidth;
     public float minimumFreeSpace;
     float freeSpaceCounter;
+    float screenInMeters;
+
+    public float backgroundScrollingSpeed;
+    public float middlegroundScrollingSpeed;
+
     public List<Transform> tilesInUse;
     public List<Transform> tilePool;
 
@@ -24,10 +29,19 @@ public class GameManager : MonoBehaviour {
     public List<Transform> bigBirdsInUse;
     public List<Transform> bigBirdPool;
 
+    public List<Transform> middleGroundInUse;
+    public List<Transform> middleGroundPool;
+
+    public List<Transform> backGroundInUse;
+    public List<Transform> backGroundPool;
+
     float movedDistance = 0;
+    float movedMiddleDistance = 0;
+    float movedBackDistance = 0;
     Vector3 lastPos;
 
     public static GameManager instance;
+    public Player player;
 
     //ObstacleSpawnStuff
     public int nextObstacleSpawnInterval;
@@ -46,14 +60,17 @@ public class GameManager : MonoBehaviour {
         currentObstacleSpawnInterval = nextObstacleSpawnInterval;
         SetupTiles();
         instance = this;
+        player = FindObjectOfType<Player>();
+        //movedMiddleDistance = -screenInMeters;
+        //movedBackDistance = -screenInMeters;
 	}
 
     void SetupTiles()
     {
-        float horzExtent = Camera.main.orthographicSize * Screen.width / Screen.height;
-        horzExtent *= 2;
-        int tilesNeeded = (int)(horzExtent / tileWidth) + 3;
-        float startPoint = horzExtent * -0.5f;
+        screenInMeters = Camera.main.orthographicSize * Screen.width / Screen.height;
+        screenInMeters *= 2;
+        int tilesNeeded = (int)(screenInMeters / tileWidth) + 3;
+        float startPoint = screenInMeters * -0.5f;
         startPoint -= tileWidth;
         for(int i = 0; i < tilesNeeded;i++)
         {
@@ -129,6 +146,9 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         movedDistance += Player.runningSpeed * Time.deltaTime;
+        movedMiddleDistance += middlegroundScrollingSpeed * Time.deltaTime;
+        movedBackDistance += backgroundScrollingSpeed * Time.deltaTime;
+
         if(movedDistance >= tileWidth)
         {
             movedDistance -= tileWidth;
@@ -138,12 +158,52 @@ public class GameManager : MonoBehaviour {
 
             CreateTile();
         }
+
+        if (movedMiddleDistance >= screenInMeters)
+        {
+            int RandomMiddle = Random.Range(0,middleGroundPool.Count);
+            middleGroundPool[RandomMiddle].position = lastPos;
+            middleGroundInUse.Add(middleGroundPool[RandomMiddle]);
+            middleGroundPool.RemoveAt(RandomMiddle);
+
+            if(middleGroundInUse.Count > 1)
+            {
+                middleGroundPool.Add(middleGroundInUse[0]);
+                middleGroundInUse.RemoveAt(0);
+            }
+
+            movedMiddleDistance -= screenInMeters;
+        }
+
+        if (movedBackDistance >= screenInMeters)
+        {
+            int RandomBack = Random.Range(0, backGroundPool.Count);
+            backGroundPool[RandomBack].position = lastPos;
+            backGroundInUse.Add(backGroundPool[RandomBack]);
+            backGroundPool.RemoveAt(RandomBack);
+
+            if(backGroundInUse.Count > 1)
+            {
+                backGroundPool.Add(backGroundInUse[0]);
+                backGroundInUse.RemoveAt(0);
+            }
+
+            movedBackDistance -= screenInMeters;
+        }
+
+
+
+        //MiddleGroundStuff
+        for(int i = 0; i < middleGroundInUse.Count;i++)
+        {
+            middleGroundInUse[i].Translate(middlegroundScrollingSpeed * Time.deltaTime, 0, 0);
+        }
+        //BackgroundStuff
+        for(int j = 0; j < backGroundInUse.Count;j++)
+        {
+            backGroundInUse[j].Translate(backgroundScrollingSpeed * Time.deltaTime,0,0);
+        }
 	}
-
-    public void Lose()
-    {
-
-    }
 
 	//refresh UI for health
 	public void refreshUI()
