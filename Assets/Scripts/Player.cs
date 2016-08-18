@@ -116,6 +116,11 @@ public class Player : MonoBehaviour
 		//this.gameObject.transform.position.y = jumpVal;
 		transform.Translate (transform.position.x, jumpVal*Time.deltaTime,0 );
 	}
+
+	public void Slide()
+	{
+
+	}
     
 }
 
