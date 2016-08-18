@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
+
+
 	public int hearts = 3;
 	public GameObject[] UIHearts;
 
