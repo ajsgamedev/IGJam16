@@ -10,10 +10,10 @@ public class MainMenuManager : MonoBehaviour {
 
 	// references to Submenus
 	public GameObject _MainMenu;
-	public GameObject _AboutMenu;
+
 	// references to Button GameObjects
 	public GameObject MenuDefaultButton;
-	public GameObject AboutDefaultButton;
+
 	//public GameObject QuitButton;
 	
 	// reference the titleText so we can change it dynamically
@@ -73,7 +73,6 @@ public class MainMenuManager : MonoBehaviour {
 	{
 		// turn all menus off
 		_MainMenu.SetActive (false);
-		_AboutMenu.SetActive(false);
 
 
 		// turn on desired menu and set default selected button for controller input
@@ -82,10 +81,6 @@ public class MainMenuManager : MonoBehaviour {
 			_MainMenu.SetActive (true);
 			EventSystem.current.SetSelectedGameObject (MenuDefaultButton);
 			titleText.text = _mainTitle;
-			break;
-		case "About":
-			_AboutMenu.SetActive(true);
-			EventSystem.current.SetSelectedGameObject (AboutDefaultButton);
 			break;
 		}
 	}
