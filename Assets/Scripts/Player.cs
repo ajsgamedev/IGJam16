@@ -13,9 +13,6 @@ public class Player : MonoBehaviour
 	public MaskType currentMask;
 	bool maskActivated;
 
-	public LayerMask whatIsGround;
-	public Transform groundCheck;
-
 
 	SpriteRenderer renderer;
 
@@ -24,7 +21,6 @@ public class Player : MonoBehaviour
 	void Start ()
 	{
 		
-		renderer = GetComponent<SpriteRenderer> ();
 		runningSpeed = speed;
 
 
@@ -34,8 +30,6 @@ public class Player : MonoBehaviour
 	void Update ()
 	{
 		
-		//Movement
-		transform.Translate (runningSpeed * Time.deltaTime, 0, 0);
 
 	}
 

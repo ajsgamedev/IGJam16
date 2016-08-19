@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
-
+	public GameObject GameOver;
+	public GameObject ResetGame;
+	public GameObject ExitGame;
 
 	public int hearts = 3;
 	public GameObject[] UIHearts;
@@ -41,7 +43,8 @@ public class GameManager : MonoBehaviour {
     Vector3 lastPos;
 
     public static GameManager instance;
-    public Player player;
+	public Player player;
+
 
     //ObstacleSpawnStuff
     public int nextObstacleSpawnInterval;
@@ -56,6 +59,13 @@ public class GameManager : MonoBehaviour {
     int currentBigBirdSpawnInterval;
 
     float progress;
+
+	void Awake()
+	{
+		GameOver.SetActive (false);
+		ResetGame.SetActive (false);
+		ExitGame.SetActive (false);
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -73,7 +83,7 @@ public class GameManager : MonoBehaviour {
     {
         screenInMeters = Camera.main.orthographicSize * Screen.width / Screen.height;
         screenInMeters *= 2;
-        Debug.Log(screenInMeters);
+        
         int tilesNeeded = (int)(screenInMeters / tileWidth) + 3;
         float startPoint = screenInMeters * -0.5f;
         startPoint -= tileWidth;
@@ -215,8 +225,7 @@ public class GameManager : MonoBehaviour {
 	{
 		if (hearts <= 0)
 		{
-			Debug.Log ("GAMEOVER!!!");
-            progress += ScoreManager.instance.score / 10;
+			EndGame ();
             PlayerPrefs.SetFloat("progress", progress);
 		}
 
@@ -228,4 +237,13 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 	}
+
+
+	public void EndGame()
+	{
+		GameOver.SetActive (true);
+		ResetGame.SetActive (true);
+		ExitGame.SetActive (true);
+	}
+
 }
