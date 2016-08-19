@@ -245,6 +245,7 @@ public class GameManager : MonoBehaviour {
 
 	public void EndGame()
 	{
+        Time.timeScale = 0;
 		GameOver.SetActive (true);
 		ResetGame.SetActive (true);
 		ExitGame.SetActive (true);
