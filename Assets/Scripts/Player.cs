@@ -12,10 +12,12 @@ public class Player : MonoBehaviour
 
 	public MaskType currentMask;
 	bool maskActivated;
+    public static Player instance;
 
-
-	SpriteRenderer renderer;
-
+	void Awake()
+    {
+        instance = this;
+    }
 
 	// Use this for initialization
 	void Start ()

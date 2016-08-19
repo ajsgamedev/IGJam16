@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour {
 
     float progress;
 
+    Vector3 lastPlayerPos;
+
 	void Awake()
 	{
 		GameOver.SetActive (false);
@@ -77,6 +79,7 @@ public class GameManager : MonoBehaviour {
         movedBackDistance = screenInMeters;
 
         progress = PlayerPrefs.GetFloat("progress");
+        lastPlayerPos = Player.instance.transform.position;
 	}
 
     void SetupTiles()
@@ -160,7 +163,8 @@ public class GameManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        movedDistance += Player.runningSpeed * Time.deltaTime;
+        movedDistance += Player.instance.transform.position.x - lastPlayerPos.x;
+        lastPlayerPos = Player.instance.transform.position;
         movedMiddleDistance +=  (Player.runningSpeed - middlegroundScrollingSpeed) * Time.deltaTime;
         movedBackDistance += (Player.runningSpeed - backgroundScrollingSpeed) * Time.deltaTime;
 
