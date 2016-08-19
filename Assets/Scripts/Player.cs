@@ -68,8 +68,7 @@ public class Player : MonoBehaviour
 		currentMask = MaskType.GreenBird;
 
 	}
-
-
+		
 }
 
 

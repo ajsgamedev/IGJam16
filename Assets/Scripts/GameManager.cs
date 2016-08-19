@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -250,5 +251,20 @@ public class GameManager : MonoBehaviour {
 		ResetGame.SetActive (true);
 		ExitGame.SetActive (true);
 	}
+
+	public void ResetLevel ()
+	{
+		Time.timeScale = 1;
+		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+
+	}
+
+	public void ReturnToMainMenu ()
+	{
+
+		SceneManager.LoadScene ("MainMenu");
+
+	}
+
 
 }
