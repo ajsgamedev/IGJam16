@@ -11,6 +11,7 @@ namespace UnityStandardAssets._2D
     {
         private PlatformerCharacter2D m_Character;
         private bool m_Jump;
+		private bool slide;
 
 		private Vector2 fingerStart;
 		private Vector2 fingerEnd;
@@ -51,13 +52,20 @@ namespace UnityStandardAssets._2D
 					if ((fingerEnd.y - fingerStart.y) > 0)
 					{
 						//Up
-
+						if (!m_Jump)
+						{
+							// Read the jump input in Update so button presses aren't missed.
+							m_Jump = true;
+						}
 
 					}
 					else
 					{
 						//Down
-
+						if (!slide)
+						{
+							slide = true;
+						}
 					}
 
 					//After the checks are performed, set the fingerStart & fingerEnd to be the same
@@ -79,11 +87,7 @@ namespace UnityStandardAssets._2D
 				movements.Clear ();
 			}
 
-            if (!m_Jump)
-            {
-                // Read the jump input in Update so button presses aren't missed.
-                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-            }
+            
         }
 
 
@@ -91,9 +95,10 @@ namespace UnityStandardAssets._2D
         {
           
             // Pass all parameters to the character control script.
-			bool slide = Input.GetKey(KeyCode.LeftControl);
+
 			m_Character.Move(1, slide, m_Jump);
             m_Jump = false;
+			slide = false;
         }
     }
 }

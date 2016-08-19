@@ -1,9 +1,13 @@
 fileFormatVersion: 2
 guid: d586ada3e0b1a6d41abce145f42e1518
-timeCreated: 1471540167
+timeCreated: 1471574453
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: mask-run_0
+    21300002: mask-run_1
+    21300004: mask-run_2
+    21300006: mask-run_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -44,14 +48,66 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 128
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: mask-run_0
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 74
+        width: 21
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: mask-run_1
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 75
+        width: 21
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: mask-run_2
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 71
+        width: 21
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: mask-run_3
+      rect:
+        serializedVersion: 2
+        x: 419
+        y: 69
+        width: 21
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 
