@@ -10,6 +10,10 @@ public class Player : MonoBehaviour
 	public float speed;
 	public static float runningSpeed;
 
+	public GameObject GMask;
+	public GameObject BMask;
+	public GameObject OMask;
+
 	public MaskType currentMask;
 	bool maskActivated;
     public static Player instance;
@@ -17,6 +21,9 @@ public class Player : MonoBehaviour
 	void Awake()
     {
         instance = this;
+		GMask.SetActive (false);
+		OMask.SetActive (false);
+		BMask.SetActive (false);
     }
 
 	// Use this for initialization
@@ -34,6 +41,34 @@ public class Player : MonoBehaviour
 		
 
 	}
+
+	public void BlueClick()
+	{
+		GMask.SetActive (false);
+		OMask.SetActive (false);
+		BMask.SetActive (true);
+		currentMask = MaskType.BlueBird;
+
+	}
+
+	public void OrangeClick()
+	{
+		GMask.SetActive (false);
+		OMask.SetActive (true);
+		BMask.SetActive (false);
+		currentMask = MaskType.YellowBird;
+
+	}
+
+	public void GreenClick()
+	{
+		GMask.SetActive (true);
+		OMask.SetActive (false);
+		BMask.SetActive (false);
+		currentMask = MaskType.GreenBird;
+
+	}
+
 
 }
 
