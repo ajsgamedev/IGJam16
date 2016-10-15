@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour {
 
 	void Awake()
 	{
+		Time.timeScale = 1;
 		GameOver.SetActive (false);
 		ResetGame.SetActive (false);
 		ExitGame.SetActive (false);
@@ -262,6 +263,7 @@ public class GameManager : MonoBehaviour {
 	public void ReturnToMainMenu ()
 	{
 
+		Time.timeScale = 1;
 		SceneManager.LoadScene ("MainMenu");
 
 	}
